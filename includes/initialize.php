@@ -35,5 +35,6 @@
 
 	//The database
 	$db = db_connect();
+	$errors = array();
 
 ?>
