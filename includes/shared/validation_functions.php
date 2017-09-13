@@ -128,8 +128,14 @@
 		return $errors;
 	}
 
-	function validate_password($pass) {
+	function validate_password($pass, $conf) {
 		$errors = [];
+
+		if(strcmp($pass,$conf) <> 0) {
+
+			$errors[] = "Password and Confirm Password are different";
+			return $errors;
+		}
 
 		if(is_blank($pass)) {
 			$errors[] = "Password must not be blank.";

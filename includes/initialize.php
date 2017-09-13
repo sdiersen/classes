@@ -9,6 +9,9 @@
 	define("PROJECT_PATH", dirname(INCLUDE_PATH));
 	define("DBASE_PATH", INCLUDE_PATH . DS . 'dbase');
 	define("SHARED_PATH", INCLUDE_PATH . DS . 'shared');
+	define("PUBLIC_PATH", PROJECT_PATH . DS. 'public');
+	define("JS_PATH", PUBLIC_PATH . DS . 'js');
+	define("CSS_PATH", PUBLIC_PATH . DS . 'css');
 
 
 	// Assign the root URL to a PHP constant

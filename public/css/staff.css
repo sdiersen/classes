@@ -29,17 +29,19 @@ header h1 {
 }
 
 navigation {
-  width: 980px;
-  margin: 0;
+  width: 70%;
+  min-width: 920px;
+  margin: 0 auto;
   padding: 0;
   text-align: center;
 }
 
 navigation ul {
-  width: 980px;
+  width: 70%;
+  min-width: 920px;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
 }
 
 navigation ul li {

@@ -13,15 +13,15 @@
 	// 	return;
 	// }
 	if (is_post_request()) {
-		$user = $_POST['username'] ?? '';
-		$pass = $_POST['password'] ?? '';
+		$user = trim($_POST['username']) ?? '';
+		$pass = trim($_POST['password']) ?? '';
 
 		$account = find_record_by_field('users', 'username', $user);
-
+		echo "<br> This is the account name : " . $account['username'];
 		if($account) {
 			if(password_verify($pass, $account['hashed_password'])) {
 				log_in_user($account);
-				redirect_to(url_for('../staff/index.php'));
+				redirect_to(url_for('/private/staff/index.php'));
 			}
 			else {
 				$errors[] = "not finding password correctly";

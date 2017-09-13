@@ -7,8 +7,9 @@
 	include(SHARED_PATH . DS . 'staff_header.php');
 
 ?>
-
-<p>This is where the index will be located</p>
+<div id="content">
+	<p>This is where the index will be located</p>
+</div>
 
 <?php
 	include(SHARED_PATH . DS . 'staff_footer.php');
