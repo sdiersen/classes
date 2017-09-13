@@ -110,4 +110,49 @@
 		return $admin_count === 0;
 	}
 
+	function validate_username($user) {
+		$errors = [];
+
+		if (is_blank($user)) {
+			$errors[] = "Username must not be blank.";
+		} elseif (has_length_greater_than($user, 50)) {
+			$errors[] = "Username must be between 6 and 50 characters";
+		} elseif (has_length_less_than($user, 6)) {
+			$errors[] = "Username must be between 6 and 50 characters";
+		}
+
+		if (has_special_character($user)) {
+			$errors[] = "Username can only be Alphanumeric";
+		}
+
+		return $errors;
+	}
+
+	function validate_password($pass) {
+		$errors = [];
+
+		if(is_blank($pass)) {
+			$errors[] = "Password must not be blank.";
+		} elseif (has_length_greater_than($pass, 50)) {
+			$errors[] = "Password must be between 8 and 50 characters";
+		} elseif (has_length_less_than($pass, 8)) {
+			$errors[] = "Password must be between 8 and 50 characters";
+		}
+
+		if (!has_uppercase_letters($pass)) {
+			$errors[] = "Must contain at least 1 upper case letter";
+		}
+		if (!has_lowercase_letters($pass)) {
+			$errors[] = "Must contain at least 1 lower case letter";
+		}
+		if (!has_numbers($pass)) {
+			$errors[] = "Must contain at least 1 number";
+		}
+		if (!has_special_character($pass)) {
+			$errors[] = "Must contain at least 1 symbol";
+		}
+
+		return $errors;
+	}
+
 ?>

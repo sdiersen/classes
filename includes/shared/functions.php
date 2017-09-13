@@ -72,3 +72,30 @@
 			return '<div id="message">' . h($msg) . '</div>';
 		}
 	}
+
+	//Session functions
+	function log_in_user($user) {
+		session_regenerate_id();
+		$_SESSION['id'] = $user['id'];
+		$_SESSION['username'] = $user['username'];
+		//eventually add the employee id and person's name
+		return true;
+	}
+
+	function is_logged_in(){
+		return isset($_SESSION['id']);
+	}
+
+	function require_login() {
+		if(!is_logged_in()) {
+			redirect_to(url_for('/private/login.php'));
+		} else {
+
+		}
+	}
+	
+	function logout_user() {
+		unset($_SESSION['id']);
+		unset($_SESSION['username']);
+		return true;
+	}

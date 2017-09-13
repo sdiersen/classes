@@ -25,12 +25,13 @@
 	//base functionality
 	require_once(SHARED_PATH . DS . 'validation_functions.php');
 	require_once(SHARED_PATH . DS . 'functions.php');
-
+	
 	//database files
 	require_once(DBASE_PATH . DS . 'table_defines.php');
 	require_once(DBASE_PATH . DS . 'config.php');
 	require_once(DBASE_PATH . DS . 'database.php');
 	require_once(DBASE_PATH . DS . 'query_functions.php');
+	require_once(DBASE_PATH . DS . 'verification.php');
 
 
 	//The database
