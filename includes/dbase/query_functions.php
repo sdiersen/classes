@@ -138,7 +138,6 @@
 			}
 		}
 		$sql .= "'" . db_escape($db, $record[$fields[($cfields - 1)]]) . "')";
-		echo $sql;
 		return check_query($sql);
 	}
 
@@ -180,7 +179,6 @@
 
 		$sql  = "SELECT * FROM " . db_escape($db, $table_name) . " ";
 		$sql .= "WHERE " . db_escape($db,$field) . "='" . db_escape($db, $value) . "'";
-		echo $sql;
 		return find_one($sql);
 	}
 

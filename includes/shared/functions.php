@@ -78,6 +78,7 @@
 		session_regenerate_id();
 		$_SESSION['id'] = $user['id'];
 		$_SESSION['username'] = $user['username'];
+		$_SESSION['access_level'] = (int)$user['access_level'];
 		//eventually add the employee id and person's name
 		return true;
 	}
@@ -86,9 +87,13 @@
 		return isset($_SESSION['id']);
 	}
 
-	function require_login() {
+	function require_login($req="0") {
+		$r = (int)$req;
+		$l = (int)$_SESSION['access_level'] ?? 0;
 		if(!is_logged_in()) {
 			redirect_to(url_for('/private/login.php'));
+		} elseif ($r > $l) {
+			redirect_to(url_for('/private/access_denied.php'));
 		} else {
 
 		}
@@ -97,5 +102,6 @@
 	function logout_user() {
 		unset($_SESSION['id']);
 		unset($_SESSION['username']);
+		unset($_SESSION['access_level']);
 		return true;
 	}

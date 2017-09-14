@@ -13,20 +13,19 @@
 	// 	return;
 	// }
 	if (is_post_request()) {
+		if($_POST['userType'] == 'Create')
+			redirect_to(url_for('/private/create_user.php'));
+
 		$user = trim($_POST['username']) ?? '';
 		$pass = trim($_POST['password']) ?? '';
 
 		$account = find_record_by_field('users', 'username', $user);
-		echo "<br> This is the account name : " . $account['username'];
+		//echo "<br> This is the account name : " . $account['username'] . " access : " . $account['access_level'];
 		if($account) {
 			if(password_verify($pass, $account['hashed_password'])) {
 				log_in_user($account);
 				redirect_to(url_for('/private/staff/index.php'));
 			}
-			else {
-				$errors[] = "not finding password correctly";
-			}
-			$errors[] = "did not find the account";
 		}
 		$errors[] = "Username/Password combination was not found";
 	}
@@ -53,8 +52,10 @@
 					<td><input type="password" name="password" /></td>
 				</tr>
 				<tr>
-					<td><input type="submit" class="btn btn-success" value="Login" /></td>
+					<td><input type="submit" class="btn btn-success" name="userType" value="Login" /></td>
 				</tr>
+				<tr>
+					<td><input type="submit" class="btn btn-primary" name="userType" value="Create" /></td>
 			</table>
 		</form>
 	</div>

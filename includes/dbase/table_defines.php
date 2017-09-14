@@ -2,7 +2,7 @@
 	//BASE TABLES
 	define('ADDRESSES_FIELDS', array('id', 'name', 'street_number', 'street', 'room', 'city', 'state', 'zip_code', 'route_code', 'po_box'));
 	define('ROOMS_FIELDS', array('id', 'address_id', 'name'));
-	define('USERS_FIELDS', array('id', 'username', 'hashed_password'));
+	define('USERS_FIELDS', array('id', 'username', 'hashed_password', 'access_level'));
 
 	//CLASSES FIELDS
 	define('CLASS_LEVEL_FIELDS', array('id', 'name', 'description'));
@@ -18,7 +18,7 @@
 	define('CLASSES_HEADINGS', array('Classes', 'ID', 'Name', 'Short Description', 'Long Description', 'Duration'));
 	
 	//EMPLOYEES
-	define('EMPLOYEES_FIELDS', array('id', 'first_name', 'middle_name', 'last_name', 'birth_date', 'date_hired'));
+	define('EMPLOYEES_FIELDS', array('id', 'first_name', 'middle_name', 'last_name', 'birth_date', 'date_hired', 'user_id', 'emp_id'));
 	define('EMPLOYEE_ADDRESSES_FIELDS', array('id', 'employee_id', 'address_id'));
 	define('EMPLOYEE_EMAILS_FIELDS', array('id', 'email', 'employee_id'));
 	define('EMPLOYEE_PHONE_NUMBERS_FIELDS', array('id', 'phone_number', 'employee_id', 'type', 'primary_phone'));

@@ -3,6 +3,7 @@
 	if(is_post_request()) {
 		$user = $_POST['username'] ?? '';
 		$pass = $_POST['password'] ?? '';
+		$acc = (int)$_POST['access'] ?? '';
 
 		$hash_pass = password_hash($pass, PASSWORD_BCRYPT); //use password_verify($pass, $hash_pass); to test for correct password
 		$rec = find_record_by_field('users', 'username', $user);
@@ -12,6 +13,7 @@
 			$new_user = [];
 			$new_user['username'] = h($user);
 			$new_user['hashed_password'] = $hash_pass;
+			$new_user['access_level'] = $acc;
 			insert_record('users', $new_user, USERS_FIELDS);
 		} else {
 			//username is in the database, inform and ask for new username
@@ -43,6 +45,17 @@
 			<dl>
 				<dt>Password: </dt>
 				<dd><input type="password" name=password /></dd>
+			</dl>
+			<dl>
+				<dt>Access Level: </dt>
+				<dd>
+					<select name="access">
+						<option value=0 selected="selected">Guest</option>
+						<option value=1>Instructor</option>
+						<option value=2>GX Co-ordinator</option>
+						<option value=3>Administrator</option>
+					</select>
+				</dd>
 			</dl>
 			<div>
 				<input type=submit id=submit value="Create New User" />

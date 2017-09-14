@@ -22,6 +22,7 @@ CREATE TABLE users (
  id int(11) NOT NULL AUTO_INCREMENT,
  username VARCHAR(50) NOT NULL,
  hashed_password VARCHAR(255) NOT NULL,
+ access_level int(2) NOT NULL DEFAULT 0,
  PRIMARY KEY (id)
 );
 
@@ -142,6 +143,7 @@ CREATE TABLE employees (
  birth_date DATE DEFAULT NULL,
  date_hired DATE DEFAULT NULL,
  user_id int(11) NOT NULL DEFAULT 0,
+ emp_id VARCHAR(7) NOT NULL,
  PRIMARY KEY (id),
  FOREIGN KEY (user_id)
   REFERENCES users(id)
