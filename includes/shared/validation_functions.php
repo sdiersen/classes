@@ -93,7 +93,7 @@
 		return preg_match('/[0-9]/', $string);
 	}
 
-	function has_special_character($string) {
+	function has_special_characters($string) {
 		return preg_match('/[^a-zA-Z0-9\s]/', $string);
 	}
 

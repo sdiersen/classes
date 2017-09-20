@@ -2,25 +2,39 @@
 	require_once('../../../includes/initialize.php');
 	require_login(1);
 
+	if(user_is_employee()) {
+		redirect_to(url_for('/private/crud/employees/edit.php'));
+	}
+
 	$employee = [];
 	$phone = [];
 	$address = [];
+	$errors = [];
 
 	if(is_post_request()){
+		$dob = $_POST['dob'] ?? '';
+		$employee['birth_date'] = convert_date($dob);
+
+		$hired = $_POST['hired'] ?? '';
+		$employee['date_hired'] = convert_date($hired);
+
 		$employee['first_name'] = $_POST['first'] ?? '';
 		$employee['middle_name'] = $_POST['middle'] ?? '';
 		$employee['last_name'] = $_POST['last'] ?? '';
-		$employee['birth_date'] = $_POST['dob'] ?? '';
-		$employee['date_hired'] = $_POST['hired'] ?? '';
-		$employee['emp_id'] = $_POST['emp_id'] ?? 'XXXXXXX';
+		$employee['emp_id'] = $_POST['emp_id'] ?? null;
+		$employee['user_id'] = $_SESSION['id'] ?? '';
+
+		$errors = validate('employees', $employee);
+
 	}
 	else {
+
 		$employee['first_name'] = '';
 		$employee['middle_name'] = '';
 		$employee['last_name'] = '';
 		$employee['birth_date'] = '1971-04-21';
 		$employee['date_hired'] = '2015-11-06';
-		$employee['emp_id'] = 'XXXXXXX';
+		$employee['emp_id'] = '';
 	}
 
 	$page_title = 'Employee Forms';
@@ -49,7 +63,7 @@
 			</dl>
 			<dl>
 				<dt>Date of Birth: </dt>
-				<dd><input type="date" name="dob" value="<?php echo h($employee['birth_date']); ?>" /> </dd>
+				<dd><input type="text" name="dob" placeholder="MM-DD-YYYY" pattern="(\d{2}-\d{2}-\d{4}|\d{8}|\d{2}/\d{2}/\d{4})" title="MM-DD-YYYY or MM/DD/YYYY or MMDDYYYY" /> </dd>
 			</dl>
 			<dl>
 				<dt>Date Hired: </dt>
@@ -65,6 +79,13 @@
 		</form>
 
 </div>
+<script>
+	function browserSupportsDateInput() {
+		var i = document.createElement("input");
+		i.setAttribute("type", "date");
+		return i.type !== "text";
+	}
+</script>
 
 <?php
 	include(SHARED_PATH . DS . 'staff_footer.php');

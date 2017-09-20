@@ -204,4 +204,14 @@
 		return find_one($sql);		
 	}
 
+	function user_is_employee(){
+		global $db;
+
+		$sql  = "SELECT * FROM employees ";
+		$sql .= "WHERE user_id='" . db_escape($db, $_SESSION['id']) . "' ";
+		$sql .= "LIMIT 	1";
+
+		return (find_one($sql) != null);
+	}
+
 ?>

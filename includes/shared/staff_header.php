@@ -19,6 +19,7 @@
 				<ul>
 					<li>User: <?php echo $_SESSION['username'] ?? ''; ?></li>
 					<li><a href="<?php echo url_for('/private/staff/index.php'); ?>">Menu</a></li>
+					<li><a href="<?php echo url_for('/private/staff/profile.php'); ?>">Profile</a></li>
 					<li><a href="<?php echo url_for('/private/logout.php'); ?>">Logout</a></li>
 				</ul>
 			</navigation>

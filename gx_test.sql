@@ -143,7 +143,7 @@ CREATE TABLE employees (
  birth_date DATE DEFAULT NULL,
  date_hired DATE DEFAULT NULL,
  user_id int(11) NOT NULL DEFAULT 0,
- emp_id VARCHAR(7) NOT NULL,
+ emp_id VARCHAR(7),
  PRIMARY KEY (id),
  FOREIGN KEY (user_id)
   REFERENCES users(id)

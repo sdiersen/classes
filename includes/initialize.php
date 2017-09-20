@@ -36,7 +36,9 @@
 	require_once(DBASE_PATH . DS . 'database.php');
 	require_once(DBASE_PATH . DS . 'query_functions.php');
 	require_once(DBASE_PATH . DS . 'verification.php');
+	require_once(DBASE_PATH . DS . 'validation.php');
 	require_once(CRUD_PATH . DS . 'index_queries.php');
+	require_once(CRUD_PATH . DS . 'create_queries.php');
 
 
 	//The database

@@ -29,6 +29,7 @@
 	}
 
 	function redirect_to($location) {
+		if(isset($_SESSION['last_page'])) { unset($_SESSION['last_page']); }
 		header("Location: " . $location);
 		exit();
 	}
@@ -73,6 +74,25 @@
 		}
 	}
 
+	function convert_date($date) {
+		$len = strlen($date);
+		$month = '';
+		$day = '';
+		$year = '';
+
+		if ($len == 8) {
+			$month = substr($date, 0, 2);
+			$day = substr($date, 2, 2);
+			$year = substr($date, 4, 4);
+		} else {
+			$month = substr($date, 0, 2);
+			$day = substr($date, 3, 2);
+			$year = substr($date, 6, 4);
+		}
+
+		return $year . '-' . $month . '-' . $day;
+	}
+
 	//Session functions
 	function log_in_user($user) {
 		session_regenerate_id();
@@ -87,7 +107,7 @@
 		return isset($_SESSION['id']);
 	}
 
-	function require_login($req="0") {
+	function require_login($req="0", $options=[]) {
 		$r = (int)$req;
 		$l = (int)$_SESSION['access_level'] ?? 0;
 		if(!is_logged_in()) {
