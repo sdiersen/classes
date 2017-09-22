@@ -65,16 +65,26 @@
 		
 		<form id="newEmployeeForm" action="<?php echo url_for('/private/crud/employees/new.php'); ?>" method="post">
 			<dl>
-				<dt <?php echo check_first_name($errors);?>>First Name: </dt>
-				<dd><input type="text" name="first" <?php echo value_or_placeholder($employee['first_name'],"First Name"); ?>" /></dd>
+				<dt <?php echo check_for_error_class($errors, FIRST_NAME_ERRORS, "errorsTitle");?>>First Name: </dt>
+				<dd>
+					<input type="text" name="first" 
+						<?php 
+							if (does_class_have_errors($errors, FIRST_NAME_ERRORS)) { 
+								echo "class=\"errorsInput\""; 
+								echo has_errors_title($errors, FIRST_NAME_ERRORS);
+							} 
+						 	echo value_or_placeholder($employee['first_name'],"First Name"); 
+						?> 
+					/>
+				</dd>
+			</dl>
+			<dl id="middle_name">
+				<dt id="middle_name_title">Middle Name:</dt>
+				<dd><input id="middle_name_input" type="text" name="middle" /></dd>
 			</dl>
 			<dl>
-				<dt>Middle Name: </dt>
-				<dd><input type="text" name="middle" <?php echo value_or_placeholder($employee['middle_name'], "Middle Name or Initial"); ?> /></dd>
-			</dl>
-			<dl>
-				<dt>Last Name: </dt>
-				<dd><input type="text" name="last" <?php echo value_or_placeholder($employee['last_name'], "Last Name"); ?> /> </dd>
+				<dt id="last_name_title">Last Name: </dt>
+				<dd><input type="text" name="last" id="last_name_input" <?php echo value_or_placeholder($employee['last_name'], "Last Name"); ?> /> </dd>
 			</dl>
 			<dl>
 				<dt>Date of Birth: </dt>
@@ -106,15 +116,8 @@
 				<input class="btn btn-primary" type="submit" value="Create Employee" />
 			</div>
 		</form>
-
+	</div>
 </div>
-<script>
-	function browserSupportsDateInput() {
-		var i = document.createElement("input");
-		i.setAttribute("type", "date");
-		return i.type !== "text";
-	}
-</script>
 
 <?php
 	include(SHARED_PATH . DS . 'staff_footer.php');

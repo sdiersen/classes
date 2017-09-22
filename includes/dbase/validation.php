@@ -139,13 +139,13 @@
 			$errors['mn_special'] = ER_MN_SPECIAL;
 		}
 		if(is_blank($record['last_name'])) {
-			$errors['mn_blank'] = ER_LN_BLANK;
+			$errors['ln_blank'] = ER_LN_BLANK;
 		}
 		if(has_length_greater_than($record['last_name'], 254)) {
-			$errors['mn_long'] = ER_LN_LONG;
+			$errors['ln_long'] = ER_LN_LONG;
 		}
 		if(has_numbers($record['last_name']) || has_special_characters($record['last_name'])) {
-			$errors['mn_special'] = ER_LN_SPECIAL;
+			$errors['ln_special'] = ER_LN_SPECIAL;
 		}
 		$dob = validate_date($record['birth_date'], "dob");
 		array_merge($errors, $dob);

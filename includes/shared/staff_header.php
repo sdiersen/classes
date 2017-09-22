@@ -9,7 +9,7 @@
 			<meta charset="utf-8">
 			<link rel="stylesheet" media="all" href="<?php echo url_for('/public/css/tether.min.css'); ?> "/>
 			<link rel="stylesheet" media="all" href="<?php echo url_for('/public/css/bootstrap.min.css'); ?>" />
-			<link rel="stylesheet" media="all" href="<?php echo url_for('/public/css/staff.css'); ?>" />
+			<link rel="stylesheet" media="all" href="<?php echo url_for('/public/css/mystyle.css'); ?>" />
 		</head>
 		<body>
 			<header>

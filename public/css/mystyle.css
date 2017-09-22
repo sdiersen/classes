@@ -1,21 +1,21 @@
 html {
-  height: 100%;
-  width: 100%;
+	height: 100%;
+	width: 100%;
 }
 
 body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 header {
 	width: 70%;
 	min-width: 920px;
 	height: 40px;
-	margin: 0 auto;
 	padding: 0;
+	margin: 0 auto;
 	background: #0055DD;
 	color: white;
 }
@@ -117,6 +117,15 @@ dd {
   margin-left: 1em;
 }
 
+dd input {
+	border: 1px solid blue;
+	border-radius: 5px;
+}
+
+dd input:focus {
+	background:bisque;
+}
+
 #operations {
   clear: both;
   margin: 1em 0 1em 75px;
@@ -126,6 +135,10 @@ dd {
 
 .errorsTitle {
   color: red;
+}
+
+.errorsInput {
+	border-color: red;
 }
 
 .errors {
@@ -149,3 +162,9 @@ dd {
   margin: 1em 30px;
   width: 890px;
 }
+
+#newEmployeeForm {
+	width:40%;
+}
+
+
