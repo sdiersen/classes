@@ -35,9 +35,7 @@
 		if($result === true) {
 			$employee['id'] = get_new_record_id();
 		} else {
-			foreach($result as $error) {
-				$errors[] = $error;
-			}
+			$errors = $result;
 		}
 
 	}
@@ -64,11 +62,10 @@
 	<a class="back-link" href="<?php echo url_for('/private/crud/employees/index.php'); ?>">&laquo;Back to List</a>
 
 	<div class="employees new">
-		<?php echo display_errors($errors); ?>
-
+		
 		<form id="newEmployeeForm" action="<?php echo url_for('/private/crud/employees/new.php'); ?>" method="post">
 			<dl>
-				<dt>First Name: </dt>
+				<dt <?php echo check_first_name($errors);?>>First Name: </dt>
 				<dd><input type="text" name="first" <?php echo value_or_placeholder($employee['first_name'],"First Name"); ?>" /></dd>
 			</dl>
 			<dl>
@@ -82,9 +79,9 @@
 			<dl>
 				<dt>Date of Birth: </dt>
 				<dd>
-					<input type="text" name="dob_month" pattern="\d{1,2}" size="2" maxlength="2" title="MM (example: 04)" 
+					<input type="text" name="dob_month" pattern="\d{1,2}" size="2" maxlength="2" title="MM or M (example: 04 or 4)" 
 						<?php echo value_or_placeholder($dob['month'], "MM"); ?>"/> / 
-					<input type="text" name="dob_day" pattern="\d{1,2}" size="2" maxlength="2" title="DD (example: 25)" 
+					<input type="text" name="dob_day" pattern="\d{1,2}" size="2" maxlength="2" title="DD or D (example: 05 or 5)" 
 						<?php echo value_or_placeholder($dob['day'], "DD"); ?>"/> /
 					<input type="text" name="dob_year" pattern="\d{4}" size="2" maxlength="4" title="YYYY (example: 2002)" 
 						<?php echo value_or_placeholder($dob['year'], "YYYY"); ?>"/>
@@ -93,9 +90,9 @@
 			<dl>
 				<dt>Date Hired: </dt>
 				<dd>
-					<input type="text" name="hired_month" pattern="\d{1,2}" size="2" maxlength="2" title="MM (example: 02)" 
+					<input type="text" name="hired_month" pattern="\d{1,2}" size="2" maxlength="2" title="MM or M (example: 02 or 2)" 
 						<?php echo value_or_placeholder($hired['month'], "MM"); ?>"/> / 
-					<input type="text" name="hired_day" placeholder="DD" pattern="\d{1,2}" size="2" maxlength="2" title="DD (example: 09)"
+					<input type="text" name="hired_day" pattern="\d{1,2}" size="2" maxlength="2" title="DD or D (example: 09 or 9)"
 						<?php echo value_or_placeholder($hired['day'], "DD"); ?> />  /
 					<input type="text" name="hired_year" pattern="\d{4}" size="2" maxlength="4" title="YYYY (example: 1903)"
 						<?php echo value_or_placeholder($hired['year'], "YYYY"); ?> />
@@ -106,7 +103,7 @@
 				<dd><input type="text" name="emp_id" maxlength="7" minlength="7" title="XXXXXXX (example: FE-3321)" <?php echo value_or_placeholder($employee['emp_id'], "XXXXXXX"); ?> /></dd>
 			</dl>
 			<div id="operations">
-				<input type="submit" value="Create Employee" />
+				<input class="btn btn-primary" type="submit" value="Create Employee" />
 			</div>
 		</form>
 

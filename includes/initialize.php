@@ -27,6 +27,8 @@
 	define("WWW_ROOT", $doc_root);
 
 	//base functionality
+	require_once(SHARED_PATH . DS . 'error_defines.php');
+	require_once(SHARED_PATH . DS . 'error_functions.php');
 	require_once(SHARED_PATH . DS . 'validation_functions.php');
 	require_once(SHARED_PATH . DS . 'functions.php');
 	

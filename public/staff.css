@@ -124,12 +124,16 @@ dd {
 
 /* Errors */
 
+.errorsTitle {
+  color: red;
+}
+
 .errors {
   display: inline-block;
   border: 2px solid red;
   color: red;
   padding: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 1em;  
 }
 
 .errors ul {
