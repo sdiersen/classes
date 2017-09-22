@@ -1,9 +1,12 @@
 <?php
 	
-	function employees_create($emp, $options){
+	function employees_create($emp, $options=[]){
 		global $db;
 
 		$errors = validate('employees', $emp);
+		if(!empty($errors)) {
+			return $errors;
+		}
 
 		$sql  = "INSERT INTO employees ";
 		$sql .= "(first_name, middle_name, last_name, birth_date, date_hired, user_id) ";

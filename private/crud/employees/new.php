@@ -10,13 +10,17 @@
 	$phone = [];
 	$address = [];
 	$errors = [];
+	$dob = [];
+	$hired = [];
 
 	if(is_post_request()){
-		$dob = $_POST['dob'] ?? '';
-		$employee['birth_date'] = convert_date($dob);
+		$dob['month'] = convert_month($_POST['dob_month'] ?? '');
+		$dob['day'] = convert_day($_POST['dob_day'] ?? '');
+		$dob['year'] = $_POST['dob_year'] ?? '';
 
-		$hired = $_POST['hired'] ?? '';
-		$employee['date_hired'] = convert_date($hired);
+		$hired['month'] = convert_month($_POST['hired_month'] ?? '');
+		$hired['day'] = convert_day($_POST['hired_day'] ?? '');
+		$hired['year'] = $_POST['hired_year'] ?? '';
 
 		$employee['first_name'] = $_POST['first'] ?? '';
 		$employee['middle_name'] = $_POST['middle'] ?? '';
@@ -24,7 +28,17 @@
 		$employee['emp_id'] = $_POST['emp_id'] ?? null;
 		$employee['user_id'] = $_SESSION['id'] ?? '';
 
-		$errors = validate('employees', $employee);
+		$employee['birth_date'] = convert_to_date($dob);
+		$employee['date_hired'] = convert_to_date($hired);
+
+		$result = employees_create($employee);
+		if($result === true) {
+			$employee['id'] = get_new_record_id();
+		} else {
+			foreach($result as $error) {
+				$errors[] = $error;
+			}
+		}
 
 	}
 	else {
@@ -32,9 +46,13 @@
 		$employee['first_name'] = '';
 		$employee['middle_name'] = '';
 		$employee['last_name'] = '';
-		$employee['birth_date'] = '1971-04-21';
-		$employee['date_hired'] = '2015-11-06';
 		$employee['emp_id'] = '';
+		$dob['year'] = '';
+		$dob['month'] = '';
+		$dob['day'] = '';
+		$hired['year'] = '';
+		$hired['month'] = '';
+		$hired['day'] = '';
 	}
 
 	$page_title = 'Employee Forms';
@@ -51,27 +69,41 @@
 		<form id="newEmployeeForm" action="<?php echo url_for('/private/crud/employees/new.php'); ?>" method="post">
 			<dl>
 				<dt>First Name: </dt>
-				<dd><input type="text" name="first" value="<?php echo h($employee['first_name']); ?>" /></dd>
+				<dd><input type="text" name="first" <?php echo value_or_placeholder($employee['first_name'],"First Name"); ?>" /></dd>
 			</dl>
 			<dl>
 				<dt>Middle Name: </dt>
-				<dd><input type="text" name="middle" value="<?php echo h($employee['middle_name']); ?>" /></dd>
+				<dd><input type="text" name="middle" <?php echo value_or_placeholder($employee['middle_name'], "Middle Name or Initial"); ?> /></dd>
 			</dl>
 			<dl>
 				<dt>Last Name: </dt>
-				<dd><input type="text" name="last" value="<?php echo h($employee['last_name']); ?>" /> </dd>
+				<dd><input type="text" name="last" <?php echo value_or_placeholder($employee['last_name'], "Last Name"); ?> /> </dd>
 			</dl>
 			<dl>
 				<dt>Date of Birth: </dt>
-				<dd><input type="text" name="dob" placeholder="MM-DD-YYYY" pattern="(\d{2}-\d{2}-\d{4}|\d{8}|\d{2}/\d{2}/\d{4})" title="MM-DD-YYYY or MM/DD/YYYY or MMDDYYYY" /> </dd>
+				<dd>
+					<input type="text" name="dob_month" pattern="\d{1,2}" size="2" maxlength="2" title="MM (example: 04)" 
+						<?php echo value_or_placeholder($dob['month'], "MM"); ?>"/> / 
+					<input type="text" name="dob_day" pattern="\d{1,2}" size="2" maxlength="2" title="DD (example: 25)" 
+						<?php echo value_or_placeholder($dob['day'], "DD"); ?>"/> /
+					<input type="text" name="dob_year" pattern="\d{4}" size="2" maxlength="4" title="YYYY (example: 2002)" 
+						<?php echo value_or_placeholder($dob['year'], "YYYY"); ?>"/>
+				</dd>
 			</dl>
 			<dl>
 				<dt>Date Hired: </dt>
-				<dd><input type="date" name="hired" value="<?php echo h($employee['date_hired']); ?> " /> </dd>
+				<dd>
+					<input type="text" name="hired_month" pattern="\d{1,2}" size="2" maxlength="2" title="MM (example: 02)" 
+						<?php echo value_or_placeholder($hired['month'], "MM"); ?>"/> / 
+					<input type="text" name="hired_day" placeholder="DD" pattern="\d{1,2}" size="2" maxlength="2" title="DD (example: 09)"
+						<?php echo value_or_placeholder($hired['day'], "DD"); ?> />  /
+					<input type="text" name="hired_year" pattern="\d{4}" size="2" maxlength="4" title="YYYY (example: 1903)"
+						<?php echo value_or_placeholder($hired['year'], "YYYY"); ?> />
+				</dd>
 			</dl>
 			<dl>
 				<dt>Employee ID: </dt>
-				<dd><input type="text" name="emp_id" maxlength="7" minlength="7" value="<?php echo h($employee['emp_id']); ?>" /></dd>
+				<dd><input type="text" name="emp_id" maxlength="7" minlength="7" title="XXXXXXX (example: FE-3321)" <?php echo value_or_placeholder($employee['emp_id'], "XXXXXXX"); ?> /></dd>
 			</dl>
 			<div id="operations">
 				<input type="submit" value="Create Employee" />

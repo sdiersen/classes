@@ -214,4 +214,9 @@
 		return (find_one($sql) != null);
 	}
 
+	function get_new_record_id() {
+		global $db;
+		return mysql_insert_id($db);
+	}
+
 ?>

@@ -89,6 +89,10 @@
 		return preg_match('/[A-Z]/', $string);
 	}
 
+	function has_letters($string) {
+		return preg_match('/[a-zA-Z]/', $string);
+	}
+
 	function has_numbers($string) {
 		return preg_match('/[0-9]/', $string);
 	}

@@ -74,25 +74,6 @@
 		}
 	}
 
-	function convert_date($date) {
-		$len = strlen($date);
-		$month = '';
-		$day = '';
-		$year = '';
-
-		if ($len == 8) {
-			$month = substr($date, 0, 2);
-			$day = substr($date, 2, 2);
-			$year = substr($date, 4, 4);
-		} else {
-			$month = substr($date, 0, 2);
-			$day = substr($date, 3, 2);
-			$year = substr($date, 6, 4);
-		}
-
-		return $year . '-' . $month . '-' . $day;
-	}
-
 	//Session functions
 	function log_in_user($user) {
 		session_regenerate_id();
@@ -124,4 +105,92 @@
 		unset($_SESSION['username']);
 		unset($_SESSION['access_level']);
 		return true;
+	}
+
+	//php html functions
+	function value_or_placeholder($value, $place) {
+		if(has_presence($value)) { 
+			return "value=\"" . $value . "\""; 
+		} else { 
+			return "placeholder=\"" . $place . "\"";	
+		}
+	}
+
+	//DATE Functions
+	//date format is MM-DD-YYYY coming in
+	function convert_date($date) {
+		$len = strlen($date);
+		$month = '';
+		$day = '';
+		$year = '';
+
+		if ($len == 8) {
+			$month = substr($date, 0, 2);
+			$day = substr($date, 2, 2);
+			$year = substr($date, 4, 4);
+		} else {
+			$month = substr($date, 0, 2);
+			$day = substr($date, 3, 2);
+			$year = substr($date, 6, 4);
+		}
+
+		return $year . '-' . $month . '-' . $day;
+	}
+	//date format is MM-DD-YYYY coming in
+	function get_month($date) {
+		return substr($date, 0, 2);
+	}
+	//date is assumed to be in sql format YYYY-MM-DD
+	function get_month_sql($date) {
+		return substr($date, 5, 2);
+	}
+	//date format is MM-DD-YYYY coming in
+	function get_day($date) {
+		$len = strlen($date);
+		if($len == 8) {
+			return substr($date,2,2);
+		} else {
+			return substr($date,3,2);
+		}
+	}
+	//date is assumed to be in sql format YYYY-MM-DD
+	function get_day_sql($date) {
+		return substr($date,8,2);
+	}
+	//date format is MM-DD-YYYY coming in
+	function get_year($date) {
+		$len = strlen($date);
+		if($len == 8) {
+			return substr($date, 4, 4);
+		} else {
+			return substr($date, 6, 4);
+		}
+	}
+	//date is assumed to be in sql format YYYY-MM-DD
+	function get_year_sql($date) {
+		return substr($date, 0, 4);
+	}
+	//converts a single digit day into a 0 left padded day
+	function convert_day($day) {
+		if (strlen($day) == 1) { 
+			$day = str_pad($day, 2, "0", STR_PAD_LEFT); 
+		}
+		return $day;
+	}
+	//converts a single digit month into a 0 left padded month
+	function convert_month($mon) {
+		if (strlen($mon) == 1) { 
+			$mon = str_pad($mon,2, "0", STR_PAD_LEFT); 
+		}
+		return $mon;
+	}
+	//converts an array of type $date - ('day', 'month', 'year') into a string of
+	//YYYY-MM-DD or NULL if any are blank
+	function convert_to_date($date) {
+		if(is_blank($date['month']) || is_blank($date['day']) || is_blank($date['year'])) {
+			return null;
+		}		
+		$day = convert_day($date['day']);
+		$mon = convert_month($date['month']);
+		return $date['year'] . '-' . $mon . '-' . $day;
 	}
