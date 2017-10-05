@@ -13,7 +13,7 @@
 		</head>
 		<body>
 			<header>
-				<h1>FitEvoMN Staff Area</h1>
+				<h1>FitEvoMN Staff Area</h1>				
 			</header>
 			<navigation>
 				<ul>
