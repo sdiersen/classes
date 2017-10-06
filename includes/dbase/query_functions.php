@@ -216,7 +216,7 @@
 
 	function get_new_record_id() {
 		global $db;
-		return mysql_insert_id($db);
+		return mysqli_insert_id($db);
 	}
 
 ?>

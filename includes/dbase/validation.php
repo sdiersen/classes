@@ -25,7 +25,7 @@
 			case 4:
 			case 6:
 			case 9:
-			case 10:
+			case 11:
 				if ((int)$day < 1 || (int)$day > 30) {
 					return ER_DAY_RANGE_30;
 				}

@@ -1,96 +1,28 @@
 $(document).ready(function () {
-	var digits = new RegExp("[0-9]");
-	var dob_month = 0;
-	var dob_day = 0;
-	var dob_year = 0;
-	var hire_month, hire_day, hire_year = 0;
+	var dob_month = errorCheckDatePart('#dob_title', '#dob_month_input', $('#dob_month_input').val(), false, true);
+	var dob_day = errorCheckDatePart('#dob_title', '#dob_day_input', $('#dob_day_input').val());
+	var dob_year = dob_year = errorCheckDatePart('#dob_title', '#dob_year_input', $('#dob_year_input').val(), true);
+	var hire_month = errorCheckDatePart('#hire_title', '#hire_month_input', $('#hire_month_input').val(), false, true);
+	var hire_day = errorCheckDatePart('#hire_title', '#hire_day_input', $('#hire_day_input').val());
+	var hire_year = errorCheckDatePart('#hire_title', '#hire_year_input', $('#hire_year_input').val(), true);
 	
+	//start up error checking for after a post that didn't work
+	errorCheckDate(hire_month, hire_day, hire_year, "#hire_title");
+	errorCheckDate(dob_month, dob_day, dob_year, "#dob_title");
+	errorCheckNamePart('#first_name_title', '#first_name_input', $('#first_name_input').val());
+	errorCheckNamePart('#middle_name_title', '#middle_name_input', $("#middle_name_input").val());
+	errorCheckNamePart('#last_name_title', '#last_name_input', $('#last_name_input').val());
 
 	$("#middle_name_input").on('input', function() {
-		var errorString = ""; 
-		var hasError = false;
-		var input = $(this).val();
-		if (input.length < 1) {
-			hasError = true;
-			errorString += "Cannot be blank. ";
-		}
-		if (special_chars.test(input)) {
-			hasError = true;
-			errorString += "Cannot have special characters. ";
-		}
-		if (digits.test(input)) {
-			hasError = true;
-			errorString += "Cannot have digits. ";
-		}
-		//$(this).addClass("errorsInput");
-		
-		if (hasError) {
-			$(this).addClass("errorsInput");
-			$(this).attr("title", errorString);
-			$("#middle_name_title").addClass("errorsTitle");
-		} else {
-			$(this).removeClass("errorsInput");
-			$(this).removeAttr("title");
-			$("#middle_name_title").removeClass("errorsTitle");
-		}
+		errorCheckNamePart('#middle_name_title', '#middle_name_input', $(this).val());
 	});
 	
 	$("#first_name_input").on('input', function() {	
-		var errorString = ""; 
-		var hasError = false;
-		var input = $(this).val();
-		if (input.length < 1) {
-			hasError = true;
-			errorString += "Cannot be blank. ";
-		}
-		if (special_chars.test(input)) {
-			hasError = true;
-			errorString += "Cannot have special characters. ";
-		}
-		if (digits.test(input)) {
-			hasError = true;
-			errorString += "Cannot have digits. ";
-		}
-		//$(this).addClass("errorsInput");
-		
-		if (hasError) {
-			$(this).addClass("errorsInput");
-			$(this).attr("title", errorString);
-			$("#first_name_title").addClass("errorsTitle");
-		} else {
-			$(this).removeClass("errorsInput");
-			$(this).removeAttr("title");
-			$("#first_name_title").removeClass("errorsTitle");
-		}
+		errorCheckNamePart('#first_name_title', '#first_name_input', $(this).val());
 	});
 
 	$("#last_name_input").on('input', function() {
-		var errorString = ""; 
-		var hasError = false;
-		var input = $(this).val();
-		if (input.length < 1) {
-			hasError = true;
-			errorString += "Cannot be blank. ";
-		}
-		if (special_chars.test(input)) {
-			hasError = true;
-			errorString += "Cannot have special characters. ";
-		}
-		if (digits.test(input)) {
-			hasError = true;
-			errorString += "Cannot have digits. ";
-		}
-		//$(this).addClass("errorsInput");
-		
-		if (hasError) {
-			$(this).addClass("errorsInput");
-			$(this).attr("title", errorString);
-			$("#last_name_title").addClass("errorsTitle");
-		} else {
-			$(this).removeClass("errorsInput");
-			$(this).removeAttr("title");
-			$("#last_name_title").removeClass("errorsTitle");
-		}
+		errorCheckNamePart('#last_name_title', '#last_name_input', $(this).val());
 	});
 
 	$("#dob_month_input").on('input', function() {
@@ -140,7 +72,7 @@ function validate_day_range(month, day, year) {
 		case 4:
 		case 6:
 		case 9:
-		case 10:
+		case 11:
 			if ( day < 1 ||  day > 30) {
 				return false;
 			}
@@ -212,5 +144,36 @@ function errorCheckDate(month, day, year, titleID) {
 		}
 	} else {
 		$(titleID).addClass("errorsTitle");
+	}
+}
+
+function errorCheckNamePart(titleID, inputID, input) {
+	var special_chars = new RegExp("[^a-zA-Z0-9\s]");
+	var digits = new RegExp("[0-9]");
+
+	var errorString = ""; 
+	var hasError = false;
+	
+	if (input.length < 1) {
+		hasError = true;
+		errorString += "Cannot be blank. ";
+	}
+	if (special_chars.test(input)) {
+		hasError = true;
+		errorString += "Cannot have special characters. ";
+	}
+	if (digits.test(input)) {
+		hasError = true;
+		errorString += "Cannot have digits. ";
+	}
+	
+	if (hasError) {
+		$(inputID).addClass("errorsInput");
+		$(inputID).attr("title", errorString);
+		$(titleID).addClass("errorsTitle");
+	} else {
+		$(inputID).removeClass("errorsInput");
+		$(inputID).removeAttr("title");
+		$(titleID).removeClass("errorsTitle");
 	}
 }

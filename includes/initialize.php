@@ -10,7 +10,8 @@
 	define("DBASE_PATH", INCLUDE_PATH . DS . 'dbase');
 	define("SHARED_PATH", INCLUDE_PATH . DS . 'shared');
 	define("PUBLIC_PATH", PROJECT_PATH . DS. 'public');
-	define("CRUD_PATH", DBASE_PATH . DS . 'crud_queries');
+	define("CRUD_QUERIES", DBASE_PATH . DS . 'crud_queries');
+	define("CRUD_PATH", DBASE_PATH. DS . 'crud');
 	define("JS_PATH", PUBLIC_PATH . DS . 'js');
 	define("CSS_PATH", PUBLIC_PATH . DS . 'css');
 
@@ -39,8 +40,11 @@
 	require_once(DBASE_PATH . DS . 'query_functions.php');
 	require_once(DBASE_PATH . DS . 'verification.php');
 	require_once(DBASE_PATH . DS . 'validation.php');
-	require_once(CRUD_PATH . DS . 'index_queries.php');
-	require_once(CRUD_PATH . DS . 'create_queries.php');
+	require_once(CRUD_QUERIES . DS . 'index_queries.php');
+	require_once(CRUD_QUERIES . DS . 'create_queries.php');
+
+	//indvidual tables or views
+	require_once(CRUD_PATH . DS . 'employees.php');
 
 
 	//The database

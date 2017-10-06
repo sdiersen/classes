@@ -14,29 +14,24 @@
 	$hired = [];
 
 	if(is_post_request()){
+
+		$dob['year'] = $_POST['dob_year'] ?? '';
 		$dob['month'] = convert_month($_POST['dob_month'] ?? '');
 		$dob['day'] = convert_day($_POST['dob_day'] ?? '');
-		$dob['year'] = $_POST['dob_year'] ?? '';
-
+		$hired['year'] = $_POST['hired_year'] ?? '';
 		$hired['month'] = convert_month($_POST['hired_month'] ?? '');
 		$hired['day'] = convert_day($_POST['hired_day'] ?? '');
-		$hired['year'] = $_POST['hired_year'] ?? '';
 
-		$employee['first_name'] = $_POST['first'] ?? '';
-		$employee['middle_name'] = $_POST['middle'] ?? '';
-		$employee['last_name'] = $_POST['last'] ?? '';
-		$employee['emp_id'] = $_POST['emp_id'] ?? null;
-		$employee['user_id'] = $_SESSION['id'] ?? '';
 
-		$employee['birth_date'] = convert_to_date($dob);
-		$employee['date_hired'] = convert_to_date($hired);
-
-		$result = employees_create($employee);
-		if($result === true) {
-			$employee['id'] = get_new_record_id();
+		$employee = convert_post_to_employee($_POST);
+		$result = create_employee($employee);
+		if (is_int($result)) {
+			$employee['id'] = $result;
 		} else {
 			$errors = $result;
 		}
+
+
 
 	}
 	else {
@@ -62,25 +57,17 @@
 	<a class="back-link" href="<?php echo url_for('/private/crud/employees/index.php'); ?>">&laquo;Back to List</a>
 
 	<div class="employees new">
+		<?php echo display_errors($errors); 
+			echo "First name: " . $employee['first_name'] . " or said another way " . ($_POST['first'] ?? "");
+			echo "<br>User id: " . $_SESSION['id'];
+		?>
 		
 		<form id="newEmployeeForm" action="<?php echo url_for('/private/crud/employees/new.php'); ?>" method="post">
-			<dl id="first_name">
-				<!-- <dt <?php echo check_for_error_class($errors, FIRST_NAME_ERRORS, "errorsTitle");?>>First Name: </dt>
-				<dd>
-					<input type="text" name="first" 
-						<?php 
-							if (does_class_have_errors($errors, FIRST_NAME_ERRORS)) { 
-								echo "class=\"errorsInput\""; 
-								echo has_errors_title($errors, FIRST_NAME_ERRORS);
-							} 
-						 	echo value_or_placeholder($employee['first_name'],"First Name"); 
-						?> 
-					/>
-				</dd> -->
+			<dl>
 				<dt id="first_name_title">First Name:</dt>
 				<dd><input id="first_name_input" type="text" name="first" <?php echo value_or_placeholder($employee['first_name'], "First Name"); ?> /></dd>
 			</dl>
-			<dl id="middle_name">
+			<dl>
 				<dt id="middle_name_title">Middle Name:</dt>
 				<dd><input id="middle_name_input" type="text" name="middle" <?php echo value_or_placeholder($employee['middle_name'], "Middle Name"); ?> /></dd>
 			</dl>
